@@ -24,6 +24,11 @@ wss.on('connection', (ws) => {
   ws.on('message', (message) =>{
     const messageObject = JSON.parse(message)
     messageObject.id = uuid();
+    if (messageObject.type === "postMessage"){
+    messageObject.type = "incomingMessage";
+    } else if (messageObject.type === "postNotification") {
+      messageObject.type = "incomingNotification";
+    }
     // ws.send(JSON.stringify(messageObject));
     wss.clients.forEach(function each(client) {
       if (client.readyState === client.OPEN) {
