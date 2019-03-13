@@ -7,7 +7,6 @@ import ChatBar from './ChatBar.jsx';
 export default class App extends Component {
   constructor (props){
    super(props); 
-
    this.state = {
     currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
     messages: [
@@ -25,8 +24,17 @@ export default class App extends Component {
   };
   }
 
+  
+
   componentDidMount() {
     console.log("componentDidMount <App />");
+    this.socket = new WebSocket("ws://localhost:3001");
+    this.socket.addEventListener('open', (event) => {
+      this.socket.send('Hello Server');
+    });
+    this.socket.addEventListener('message', (event) =>{
+      console.log('message from server ', event.data);
+    })
     setTimeout(() => {
       console.log("Simulating incoming message");
       // Add a new message to the list of messages in the data store
@@ -40,9 +48,9 @@ export default class App extends Component {
 
   _newMessage = (event) => {
     if (event.key === 'Enter') {
-      const userMessage = {username: `${this.state.currentUser.name}`, content: event.target.value, id: `${this.state.currentUser.name + Date.now().toString()}`};
-      const updateMessages = this.state.messages.concat(userMessage)
-      this.setState({messages: updateMessages})
+      const userMessage = {username: `${this.state.currentUser.name}`, content: event.target.value};
+      const updateMessages = this.state.messages.concat(userMessage);
+      this.socket.send(`User ${this.state.currentUser.name} said ${event.target.value}`);
       event.target.value = "";
     }  
   }
