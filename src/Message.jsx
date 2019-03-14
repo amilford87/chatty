@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 
 export default class Message extends Component {
   
+
   
   render() {
     return (
@@ -15,6 +16,9 @@ export default class Message extends Component {
           <span className="message system">{this.props.message.content}</span>
           </div>
          )}
+         <div>
+           <img className="message-image" src={this.props.message.image}/>
+         </div>
       </main>
     );
   }

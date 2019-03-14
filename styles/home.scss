@@ -49,7 +49,7 @@
     }
 
     .message-content,
-    .message-username {
+    .message-username{
       overflow: hidden;
       margin: 5px;
       padding: 0 10px;
@@ -92,4 +92,8 @@
       margin-right: 10px;
       line-height: 60px;
       font-size: 18px;
+    }
+
+    .message-image{
+      max-width: 60%;
     }

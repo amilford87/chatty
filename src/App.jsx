@@ -9,7 +9,7 @@ export default class App extends Component {
   constructor (props){
    super(props); 
    this.state = {
-    currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+    currentUser: {name: "Anonymous"},
     messages: [], // messages coming from the server will be stored here as they arrive
     userCount: 0,
     color: ""
@@ -37,6 +37,13 @@ export default class App extends Component {
   }
 
   _newMessage = (message) => {
+    if (message.content.match(/http.*(jpg|gif|png|jpeg)$/)){
+      const findImage = message.content.search(/http.*(jpg|gif|png|jpeg)$/);
+      message.image = message.content.substring(findImage);
+      console.log(message.image);
+      message.content = message.content.replace(message.image, "");
+      console.log(message.content);
+    }
       this.socket.send(JSON.stringify(message));
   }
 
