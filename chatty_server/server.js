@@ -1,5 +1,4 @@
 // server.js
-
 const express = require('express');
 const SocketServer = require('ws').Server;
 const uuid = require('uuid/v1');
@@ -15,6 +14,7 @@ const server = express()
 // Create the WebSockets server
 const wss = new SocketServer({ server });
 
+// Colors array to assign to clients upon server connection
 const colors =["#cc3300", "#0066ff", "#ffcc00", "#9933ff"]
 // Set up a callback that will run when a client connects to the server
 // When a client connects they are assigned a socket, represented by
@@ -26,19 +26,16 @@ wss.on('connection', (ws) => {
   wss.clients.forEach(function each(client) {
     if (client.readyState === client.OPEN) {
       client.send(JSON.stringify(clientsConnected));
-      console.log(clientsConnected);
     }
   });
 
-
-  // ws.send(clientsConnected);
 
   ws.on('message', (message) =>{
     const messageObject = JSON.parse(message)
     messageObject.id = uuid();
     messageObject.color = {color: ws.color}
     if (messageObject.type === "postMessage"){
-    messageObject.type = "incomingMessage";
+      messageObject.type = "incomingMessage";
     } else if (messageObject.type === "postNotification") {
       messageObject.type = "incomingNotification";
     }
@@ -58,8 +55,6 @@ wss.on('connection', (ws) => {
       if (client.readyState === client.OPEN) {
         client.send(JSON.stringify(clientsConnected));
       }
-    console.log(clientsConnected);
-    // ws.send(clientsConnected);
-});
+    });
   });
 });

@@ -8,17 +8,17 @@ export default class Message extends Component {
     return (
       <main className="messages">
         {this.props.message.type === 'incomingMessage' ? (
-        <div className="message">
-          <span className="message-username" style={this.props.message.color}>{this.props.message.username}</span>
-          <span className="message-content">{this.props.message.content}</span>
-        </div>) : (
+          <div className="message">
+            <span className="message-username" style={this.props.message.color}>{this.props.message.username}</span>
+            <span className="message-content">{this.props.message.content}</span>
+          </div>) : (
           <div>
-          <span className="message system">{this.props.message.content}</span>
+            <span className="message system">{this.props.message.content}</span>
           </div>
-         )}
-         <div>
-           <img className="message-image" src={this.props.message.image}/>
-         </div>
+        )}
+        <div>
+          <img className="message-image" src={this.props.message.image}/>
+        </div>
       </main>
     );
   }
