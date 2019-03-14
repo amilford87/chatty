@@ -4,11 +4,6 @@ export default class Message extends Component {
   
   
   render() {
-    const systemMessage = (
-      <div className="message system">
-        {this.props.message.system}
-      </div>
-    )
     return (
       <main className="messages">
         {this.props.message.type === 'incomingMessage' ? (

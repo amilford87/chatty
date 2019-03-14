@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import MessageList from './MessageList.jsx';
 import ChatBar from './ChatBar.jsx';
+import NavBar from './Navbar.jsx';
 
 
 
@@ -9,7 +10,8 @@ export default class App extends Component {
    super(props); 
    this.state = {
     currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
-    messages: [] // messages coming from the server will be stored here as they arrive
+    messages: [], // messages coming from the server will be stored here as they arrive
+    userCount: 0
   };
   }
 
@@ -18,14 +20,18 @@ export default class App extends Component {
   componentDidMount() {
     console.log("componentDidMount <App />");
     this.socket = new WebSocket("ws://localhost:3001");
+    console.log(this.socket);
     this.socket.addEventListener('open', (event) => {
-      console.log('Connected to server');
+      console.log('Connected to server ');
     });
     this.socket.addEventListener('message', (event) =>{
       const messageFromServer = JSON.parse(event.data);
-      console.log('here: ', messageFromServer);
+      if (messageFromServer.type === "userCount") {
+        this.setState({userCount: messageFromServer.clients})
+      } else{
       const oldMessages = this.state.messages;
       this.setState({messages: [...oldMessages, messageFromServer]})
+      }
       });
   }
 
@@ -45,6 +51,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="container">
+      <NavBar users={this.state.userCount}/>
       <MessageList messages = {this.state.messages}/>
       <ChatBar currentUser = {this.state.currentUser} chatMessage = {this._newMessage} changeUser={this._changeUserName}/>
       </div>
