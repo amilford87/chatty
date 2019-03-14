@@ -11,7 +11,8 @@ export default class App extends Component {
    this.state = {
     currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
     messages: [], // messages coming from the server will be stored here as they arrive
-    userCount: 0
+    userCount: 0,
+    color: ""
   };
   }
 
