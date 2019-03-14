@@ -21,7 +21,9 @@ Multiple users can connect and a live counter is displayed at the top right to s
 
 If a user adds an image/gif url to their message the image/gif will be displayed.
 
-##Screenshots
+##Screenshot
+
+!["Screenshot of chatty messages"](https://github.com/amilford87/chatty/blob/master/docs/chatty-screenshot.png)
 
 ### Dependencies
 
