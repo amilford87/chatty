@@ -14,10 +14,11 @@ export default class Message extends Component {
           </div>) : (
           <div>
             <span className="message system">{this.props.message.content}</span>
-          </div>
-        )}
-        <div>
-          <img className="message-image" src={this.props.message.image}/>
+          </div>)
+        }
+        <div className="message">
+          <span className="message-username"></span>
+          <span className="message-content"><img className="message-image" src={this.props.message.image}/></span>
         </div>
       </main>
     );
